@@ -82,7 +82,7 @@
   /* We have to put all elements or sectons into a container  */
   .top-banner
   {
-    background-image:url(../Website_cloning/assets/asset\ 32.png);
+    background-image:url(../Landing_page/assets/asset\ 32.png);
     background-color:#e74694;
     background-size:300px;
     padding-inline:10px;
@@ -208,7 +208,7 @@
   padding: 40px var(--padding-inline-section);
 }
 .features-section .container{
-  background-image:url(../Website_cloning/assets/asset\ 34.svg);
+  background-image:url(../Landing_page/assets/asset\ 34.svg);
   background-repeat: no-repeat;
   background-size:100% 100%;
   background-position:100% 100%;
@@ -292,7 +292,7 @@
 
 .quatation{
   max-width:410px;
-  background-image:url(../Website_cloning/assets/asset\ 35.svg);
+  background-image:url(../Landing_page/assets/asset\ 35.svg);
   background-repeat: no-repeat;
   background-position:top left;
   background-size: 64px;
@@ -330,23 +330,23 @@
    border-radius:2px;
    position: relative;
    background:black;
-   background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Website_cloning/assets/asset\ 36.jpeg);
+   background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Landing_page/assets/asset\ 36.jpeg);
    background-size:cover;
    transition:0.2s ease-out;
 }
 .example_card:nth-child(2)
 {
-  background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Website_cloning/assets/asset\ 37.jpeg);
+  background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Landing_page/assets/asset\ 37.jpeg);
    background-size:cover;
 }
 .example_card:nth-child(3)
 {
-  background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Website_cloning/assets/asset\ 38.jpeg);
+  background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Landing_page/assets/asset\ 38.jpeg);
    background-size:cover;
 }
 .example_card:nth-child(4)
 {
-  background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Website_cloning/assets/asset\ 39.jpeg);
+  background:linear-gradient(rgb(0,0,0,0.1),rgb(0,0,0,0.8)),url(../Landing_page/assets/asset\ 39.jpeg);
    background-size:cover;
 }
 .example_card:hover{

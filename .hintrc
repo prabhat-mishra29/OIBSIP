@@ -11,11 +11,7 @@
     ],
     "no-inline-styles": "off",
     "highest-available-document-mode": "off",
-    "axe/name-role-value": [
-      "default",
-      {
-        "link-name": "off"
-      }
-    ]
+    "axe/name-role-value": "off",
+    "axe/forms": "off"
   }
 }

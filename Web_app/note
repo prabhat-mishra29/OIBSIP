@@ -1,0 +1,26 @@
+>This is going to help us about the function and working procedure of API.
+>Client requests to server through API and server responds to client through API.
+>API :-- communication media.
+>API key:- A secret key . Every user have a special key when a user request a server through API server checks whether that user is valid user or not via user's API key.
+>API key is different for different user.
+>search "Openweather free API" 
+>got to current weather data doc
+    >Call current weather data
+    >How to make an API call
+    >API call
+    >https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+    
+    >Parameters
+        1.lat:--(required)	Latitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates.
+
+        2.lon:--(required)	Longitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates.
+
+        3.appid:--(required) Your unique API key.
+
+        4.mode:--(optional)	Response format. Possible values are xml and html. If you don't use the mode parameter format is JSON by default.
+
+        5.units:--(optional) Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.
+
+        6.lang:--(optional)	You can use this parameter to get the output in your language.
+    
+    >check out example

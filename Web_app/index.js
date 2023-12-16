@@ -11,6 +11,10 @@ const searchForm = document.querySelector("[data-searchForm ]");
 const searchInput= document.querySelector("[data-searchInput]");
 const loadingScreen=document.querySelector(".loading-container");
 const grantAccessButton=document.querySelector("[data-grantAccess]");
+const apiErrorContainer = document.querySelector(".api-error-container");
+const apiErrorImg = document.querySelector("[data-notFoundImg]");
+const apiErrorMessage = document.querySelector("[data-apiErrorText]");
+const apiErrorBtn = document.querySelector("[data-apiErrorBtn]");
 
 //Intialized variable
 let currentTab = userTab; //By default
@@ -62,10 +66,12 @@ function switchtab(clickedTab){
             //user main current location yani ki co-ordiantes jo session storage main hoga uska userinfo show karega
             searchForm.classList.remove("active");
             userInfoContainer.classList.remove("active");
+            apiErrorContainer.classList.remove("active")
             getFromSessionStorage();
         }
     }
 }
+
 
 
 // Check if coordinates are already present in Session Storage
@@ -82,7 +88,31 @@ function getFromSessionStorage() {
     }
 }
 
-  
+
+//Grant access button pai ek listner laga ki jabb click ho toh network access ka permission puche and session storage pai save kare
+// Get Coordinates using geoLocation
+grantAccessButton.addEventListener("click",getLocation);
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      grantAccessBtn.style.display = "none";
+      alert("Geolocation is not supported by this browser.");
+    }
+}
+// Store User Coordinates
+function showPosition(position) {
+    const userCoordinates = {
+      lat: position.coords.latitude,
+      lon: position.coords.longitude,
+    };
+    sessionStorage.setItem("user-coordinates", JSON.stringify(userCoordinates));
+
+    //UI pai dikhana hai
+    fetchUserWeatherInfo(userCoordinates);
+}
+
+
 async function fetchUserWeatherInfo(coordinates){
     const{lat,lon}=coordinates;
     //Make grant container invisible
@@ -104,9 +134,12 @@ async function fetchUserWeatherInfo(coordinates){
         //UI pai render karoo
         renderWeatherInfo(data);
     }
-    catch(err){
-        //Remove loading screen
-        loadingScreen.classList.remove("active");
+    catch(error){
+        loadingScreen.classList.remove("active"); //Remove loading screen
+        apiErrorContainer.classList.add("active"); //Error classlist ko add karo
+        apiErrorImg.style.display = "none";   
+        apiErrorMessage.innerText = `Error: ${error?.message}`; //Error message show karo
+        apiErrorBtn.addEventListener("click", fetchUserWeatherInfo); //phir se session storage se data leke render karo
     }
 }
 
@@ -141,31 +174,6 @@ function renderWeatherInfo(weatherInfo){
     cloudiness.innerText = `${weatherInfo?.clouds?.all}%`;
 }
 
-
-//Grant access button pai ek listner laga ki jabb click ho toh network access ka permission puche and session storage pai save kare
-// Get Coordinates using geoLocation
-grantAccessButton.addEventListener("click",getLocation);
-function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      grantAccessBtn.style.display = "none";
-      alert("Geolocation is not supported by this browser.");
-    }
-}
-// Store User Coordinates
-function showPosition(position) {
-    const userCoordinates = {
-      lat: position.coords.latitude,
-      lon: position.coords.longitude,
-    };
-    sessionStorage.setItem("user-coordinates", JSON.stringify(userCoordinates));
-
-    //UI pai dikhana hai
-    fetchUserWeatherInfo(userCoordinates);
-}
-
-
 //hmm search pai hian agar userbox ko click kiya toh 2 option atte hain.
 //Either coordinates hoga ya toh nahi hoga.
 //Agar coordinates hai toh userinfo show karega
@@ -185,18 +193,23 @@ async function fetchSearchWeatherInfo(city) {
     loadingScreen.classList.add("active");
     userInfoContainer.classList.remove("active");
     grantAccessContainer.classList.remove("active");
+    apiErrorContainer.classList.remove("active");
 
     try {
         const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
         const data = await res.json();
-        
+
+        if (!data.sys) {
+            throw data;
+        }
+
         loadingScreen.classList.remove("active");
         userInfoContainer.classList.add("active");
         renderWeatherInfo(data);
     } catch (error) {
-        // loadingScreen.classList.remove("active");
-        // apiErrorContainer.classList.add("active");
-        // apiErrorMessage.innerText = `${error?.message}`;
-        // apiErrorBtn.style.display = "none";
+        loadingScreen.classList.remove("active");
+        apiErrorContainer.classList.add("active");
+        apiErrorMessage.innerText = `${error?.message}`;
+        apiErrorBtn.style.display = "none";
     }
 }
